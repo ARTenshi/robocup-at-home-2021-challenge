@@ -58,4 +58,4 @@ ENV ROS_PACKAGE_PATH=/workspace/catkin_ws/src:/opt/ros/melodic/share
 #RUN /bin/bash -c '. /workspace/catkin_ws/devel/setup.bash; roslaunch wrs_challenge run.launch'
 RUN echo $ROS_PACKAGE_PATH 
 
-CMD roslaunch wrs_challenge run.launch
+CMD roslaunch robocup_challenge run.launch
