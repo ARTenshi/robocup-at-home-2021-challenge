@@ -29,33 +29,33 @@ RUN cd /workspace && /ros_entrypoint.sh rosdep install --from-paths src --ignore
 #My code
 RUN apt install -y wget curl git python-pip python3-pip
 
-RUN mkdir -p /workspace/catkin_ws/src
-RUN git clone https://github.com/ARTenshi/realWRS2020.git /workspace/catkin_ws/src/wrs2020
+#RUN mkdir -p /workspace/catkin_ws/src
+RUN git clone https://github.com/ARTenshi/realWRS2020.git /workspace/src/wrs2020
 
-RUN chmod +x /workspace/catkin_ws/src/wrs2020/install.sh
-RUN sh /workspace/catkin_ws/src/wrs2020/install.sh > /dev/null
+RUN chmod +x /workspace/src/wrs2020/install.sh
+RUN sh /workspace/src/wrs2020/install.sh > /dev/null
 
-RUN chmod +x /workspace/catkin_ws/src/wrs2020/install-opencv.sh
-RUN sh /workspace/catkin_ws/src/wrs2020/install-opencv.sh > /dev/null
+RUN chmod +x /workspace/src/wrs2020/install-opencv.sh
+RUN sh /workspace/src/wrs2020/install-opencv.sh > /dev/null
 
-RUN chmod +x /workspace/catkin_ws/src/wrs2020/install-darknet.sh
-RUN sh /workspace/catkin_ws/src/wrs2020/install-darknet.sh > /dev/null
+RUN chmod +x /workspace/src/wrs2020/install-darknet.sh
+RUN sh /workspace/src/wrs2020/install-darknet.sh > /dev/null
 
 # compile and install our algorithm
-RUN cd /workspace/catkin_ws && /ros_entrypoint.sh catkin_make --pkg hri_msgs  > /dev/null
-RUN cd /workspace/catkin_ws && /ros_entrypoint.sh catkin_make  > /dev/null
-RUN source /workspace/catkin_ws/devel/setup.bash
+RUN cd /workspace && /ros_entrypoint.sh catkin_make --pkg hri_msgs  > /dev/null
+RUN cd /workspace && /ros_entrypoint.sh catkin_make  > /dev/null
+RUN source /workspace/devel/setup.bash
 
 RUN apt-get -y install tree > /dev/null
 RUN tree -d /workspace > /dev/null
 
-RUN /bin/bash -c "source /workspace/catkin_ws/devel/setup.bash && \
-                  echo 'source /workspace/catkin_ws/devel/setup.bash' >> ~/.bashrc && \
-                  export ROS_PACKAGE_PATH=/workspace/catkin_ws/src:$ROS_PACKAGE_PATH"
+RUN /bin/bash -c "source /workspace/devel/setup.bash && \
+                  echo 'source /workspace/devel/setup.bash' >> ~/.bashrc && \
+                  export ROS_PACKAGE_PATH=/workspace/src:$ROS_PACKAGE_PATH"
 
 #RUN echo $ROS_PACKAGE_PATH
-ENV ROS_PACKAGE_PATH=/workspace/catkin_ws/src:/opt/ros/melodic/share
-#RUN /bin/bash -c '. /workspace/catkin_ws/devel/setup.bash; roslaunch wrs_challenge run.launch'
+ENV ROS_PACKAGE_PATH=/workspace/src:/opt/ros/melodic/share
+#RUN /bin/bash -c '. /workspace/devel/setup.bash; roslaunch wrs_challenge run.launch'
 RUN echo $ROS_PACKAGE_PATH 
 
-CMD roslaunch robocup_challenge run.launch
+CMD roslaunch wrs_challenge run.launch
