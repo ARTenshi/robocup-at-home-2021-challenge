@@ -43,7 +43,7 @@ RUN sh /workspace/src/wrs2020/install-darknet.sh > /dev/null
 
 # compile and install our algorithm
 RUN cd /workspace && /ros_entrypoint.sh catkin_make --pkg hri_msgs  > /dev/null
-RUN cd /workspace && /ros_entrypoint.sh catkin_make  > /dev/null
+RUN cd /workspace && /ros_entrypoint.sh catkin_make install -DCMAKE_INSTALL_PREFIX=/opt/ros/$ROS_DISTRO > /dev/null
 RUN source /workspace/devel/setup.bash
 
 RUN apt-get -y install tree > /dev/null
@@ -58,4 +58,5 @@ ENV ROS_PACKAGE_PATH=/workspace/src:/opt/ros/melodic/share
 #RUN /bin/bash -c '. /workspace/devel/setup.bash; roslaunch wrs_challenge run.launch'
 RUN echo $ROS_PACKAGE_PATH 
 
-CMD roslaunch wrs_challenge run.launch
+#CMD roslaunch wrs_challenge run.launch
+RUN /bin/bash -c '. /workspace/devel/setup.bash; roslaunch wrs_challenge run.launch'
