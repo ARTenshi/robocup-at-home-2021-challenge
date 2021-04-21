@@ -58,5 +58,4 @@ ENV ROS_PACKAGE_PATH=/workspace/src:/opt/ros/melodic/share
 #RUN /bin/bash -c '. /workspace/devel/setup.bash; roslaunch wrs_challenge run.launch'
 RUN echo $ROS_PACKAGE_PATH 
 
-#CMD roslaunch wrs_challenge run.launch
-RUN /bin/bash -c '. /workspace/devel/setup.bash; roslaunch wrs_challenge run.launch' 
+CMD roslaunch wrs_challenge run.launch
